@@ -31,7 +31,7 @@ public class User {
     @NotBlank(message = "Password field can not be blank, empty or null")
     private String password;
     @NotNull(message = "Status can not be null")
-    private boolean isAvailabe;
+    private boolean is_available;
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
     @OneToMany(mappedBy = "user")
@@ -43,6 +43,18 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    public boolean isIs_available() {
+        return this.is_available;
+    }
+
+    public boolean getIs_available() {
+        return this.is_available;
+    }
+
+    public void setIs_available(boolean is_available) {
+        this.is_available = is_available;
+    }
 
     public Integer getId() {
         return this.id;
@@ -74,18 +86,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isIsAvailabe() {
-        return this.isAvailabe;
-    }
-
-    public boolean getIsAvailabe() {
-        return this.isAvailabe;
-    }
-
-    public void setIsAvailabe(boolean isAvailabe) {
-        this.isAvailabe = isAvailabe;
     }
 
     public List<Ticket> getTickets() {
