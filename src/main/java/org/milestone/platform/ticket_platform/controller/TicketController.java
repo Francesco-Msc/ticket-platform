@@ -32,6 +32,7 @@ public class TicketController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model){
         model.addAttribute("tickets", ticketService.getById(id));
+        model.addAttribute("isDetail", true);
         return "dashboard/show";
     }
 
@@ -55,5 +56,26 @@ public class TicketController {
 
         ticketService.create(addTicket);
         return "redirect:/dashboard";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("ticket", ticketService.getById(id));
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("users", userService.availableOperators(userService.findAll()));
+        return "dashboard/create-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("ticket") Ticket updaTicket, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("users", userService.availableOperators(userService.findAll()));
+            return "dashboard/create-edit";
+        }
+        Ticket existingTicket = ticketService.getById(id);
+        updaTicket.setCreation_date(existingTicket.getCreation_date());
+        ticketService.update(updaTicket);
+        return "redirect:/ticket/" + id;
     }
 }
