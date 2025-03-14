@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <th:block th:replace="~{fragments/head-script :: head}" \>
+        <title>Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <th:block th:replace="~{fragments/navbar :: navbar}" \>
+    </header>
+    <main>
+        <div class="container shadow p-3 mt-5 bg-white border rounded">
+            <h3 th:if="${create}" class="text-center mt-3">Open ticket</h3>
+            <h3 th:unless="${create}" class="text-center mt-3">Editing ticket "[[${ticket.title}]]"</h3>
+
+            <form th:action="${create} ? @{/ticket/create} : @{|/ticket/create-edit/${ticket.id}|}"
+                method="post" th:object="${ticket}">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" th:errorClass="is-invalid">
+
+                    <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="error : ${#fields.errors('title')}" th:text="${error}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <input type="text" class="form-control" id="description" th:field="*{description}"
+                        th:errorClass="is-invalid">
+
+                    <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="error : ${#fields.errors('description')}" th:text="${error}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="mb-2" for="category">Category:</label> <br>
+                    <select th:field="*{category.id}" id="category" required class="form-select" aria-label="category">
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                      </select>
+                </div>
+                <div class="mb-3">
+                    <label class="mb-2" for="assign">Assign to:</label> <br>
+                    <select th:field="*{user.id}" id="category" required class="form-select" aria-label="category">
+                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+                      </select>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <input type="submit" value="Save" class="px-4 btn btn-primary my-2"></input>
+                </div>
+            </form>
+        </div>
+    </main>
+    <th:block th:replace="~{fragments/head-script :: script}" \></th:block>
+</body>
+
+</html>
