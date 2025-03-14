@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.milestone.platform.ticket_platform.enums.TicketStatus;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -37,6 +38,8 @@ public class Ticket {
     private TicketStatus status;
     @CreationTimestamp
     private LocalDateTime creation_date;
+    @UpdateTimestamp
+    private LocalDateTime updated_at;
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
@@ -47,6 +50,10 @@ public class Ticket {
     @JsonBackReference
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
+    public Ticket() {
+        this.status = TicketStatus.PENDING;
+    }
 
     public Integer getId() {
         return this.id;
