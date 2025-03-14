@@ -14,18 +14,18 @@
                 <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Status</th>
                         <th>Creation date</th>
                         <th>See details</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="ticket : ${tickets}">
-                        <td th:text="${ticket.title}"></td>
-                        <td th:text="${ticket.status}"></td>
-                        <td th:text="${ticket.creation_date}"></td>
+                    <tr th:each="ticket : ${tickets}" th:object="${ticket}">
+                        <td th:text="*{title}"></td>
+                        <td th:text="*{creation_date}"></td>
                         <td>
-                            <a href="#">Link</a>
+                            <a th:href="@{dashboard/ticket/{id}(id=*{id})}">
+                                <i class="fa-solid fa-link"></i>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
