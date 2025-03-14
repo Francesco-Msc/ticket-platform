@@ -51,6 +51,15 @@ public class Ticket {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    public LocalDateTime getUpdated_at() {
+        return this.updated_at;
+    }
+
+    public void setUpdated_at(LocalDateTime updated_at) {
+        this.updated_at = updated_at;
+    }
+
+
     public Ticket() {
         this.status = TicketStatus.PENDING;
     }
