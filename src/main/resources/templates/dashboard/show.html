@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <th:block th:replace="~{fragments/head-script :: head}" \>
+  <th:block th:replace="~{fragments/head-script :: head}" \>
     <title>Dashboard</title>
 </head>
+
 <body>
-    <header>
-        <th:block th:replace="~{fragments/navbar :: navbar}" \>
-    </header>
-    <main>
-        <div class="card text-center" th:each="ticket : ${tickets}" th:object="${ticket}">
-            <div class="card-header">
-              <h4 th:text="*{title}"></h4>
-            </div>
-            <div class="card-body">
-              <p th:text="*{description}" class="card-title"></p>
-              <p th:text="*{category.name}" class="card-text"></p>
-              <p th:text="*{status}"></p>
-              <p th:text="*{user.name}"></p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-            <div class="card-footer text-body-secondary">
-              <p th:text="*{creation_date}"></p>
-            </div>
-          </div>            
+  <header>
+    <th:block th:replace="~{fragments/navbar :: navbar}" \>
+  </header>
+  <main>
+    <div class="container text-center">
+      <div class="card text-center" th:each="ticket : ${tickets}" th:object="${ticket}">
+        <div class="card-header">
+          <h4 th:text="*{title}"></h4>
         </div>
-    </main>
-    <th:block th:replace="~{fragments/head-script :: script}" \></th:block>
+        <div class="card-body">
+          <p th:text="*{description}" class="card-title"></p>
+          <p th:text="*{category.name}" class="card-text"></p>
+          <p th:text="*{status}"></p>
+          <p th:text="*{user.name}"></p>
+        </div>
+        <div class="card-footer text-body-secondary">
+          <div>
+            <div>Created:</div>
+            <p th:text="*{creation_date}"></p>
+          </div>
+          <div>
+            <div>Last updated on:</div>
+            <p th:text="*{updated_at}"></p>
+          </div>
+        </div>
+      </div>
+      <a th:href="@{/dashboard}" class="btn btn-primary mt-4">Go back</a>
+    </div>
+    </div>
+  </main>
+  <th:block th:replace="~{fragments/head-script :: script}" \></th:block>
 </body>
+
 </html>
