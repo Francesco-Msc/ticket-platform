@@ -31,7 +31,7 @@ public class User {
     @NotBlank(message = "Password field can not be blank, empty or null")
     private String password;
     @NotNull(message = "Status can not be null")
-    private boolean is_available;
+    private boolean isAvailable;
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
     @OneToMany(mappedBy = "user")
@@ -44,16 +44,16 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    public boolean isIs_available() {
-        return this.is_available;
+    public boolean isAvailable() {
+        return this.isAvailable;
     }
 
-    public boolean getIs_available() {
-        return this.is_available;
+    public boolean getIsAvailable() {
+        return this.isAvailable;
     }
 
-    public void setIs_available(boolean is_available) {
-        this.is_available = is_available;
+    public void setIsAvailable(boolean is_available) {
+        this.isAvailable = is_available;
     }
 
     public Integer getId() {
