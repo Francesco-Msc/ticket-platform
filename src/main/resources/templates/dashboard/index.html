@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="~{fragments/head-script :: head}" \>
+    <title>Dashboard</title>
+</head>
+<body>
+    <header>
+        <th:block th:replace="~{fragments/navbar :: navbar}" \>
+    </header>
+    <main>
+        <div class="container">
+            <table class="text-center table table-hover my-3 border rounded shadow p-3 mb-5" th:if="${tickets.size() > 0}">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Creation date</th>
+                        <th>See details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="ticket : ${tickets}">
+                        <td th:text="${ticket.title}"></td>
+                        <td th:text="${ticket.status}"></td>
+                        <td th:text="${ticket.creation_date}"></td>
+                        <td>
+                            <a href="#">Link</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div th:unless="${tickets.size() > 0}">No tickets available</div>
+        </div>
+    </main>
+    <th:block th:replace="~{fragments/head-script :: script}" \></th:block>
+</body>
+</html>
