@@ -16,4 +16,20 @@ public class TicketService {
     public List<Ticket> findAll(){
         return ticketRepo.findAll();
     }
+
+    public Ticket getById(Integer id){
+        return ticketRepo.findById(id).get();
+    }
+
+    public List<Ticket> findByQuery(String query){
+        return ticketRepo.findByTitleContains(query);
+    }
+
+    public Ticket create(Ticket addTicket){
+        return ticketRepo.save(addTicket);
+    }
+
+    public Ticket update(Ticket updaTicket){
+        return ticketRepo.save(updaTicket);
+    }
 }
