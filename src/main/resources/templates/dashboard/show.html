@@ -36,11 +36,16 @@
             <span class="fw-bold">Assigned to:</span>
             <p th:text="*{user.name}"></p>
           </div>
-          <div  class="mb-2" th:if="${notes != null}">
-            <span class="fw-bold">Notes:</span></span>
-            <ul>
+          <!-- notes -->
+          <button th:if="${not #lists.isEmpty(ticket.notes)}" class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            See notes
+          </button>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+              <ul>
                 <li th:each="note : ${notes}" th:text="${note.text}"></li>
-            </ul>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="card-footer text-body-secondary">
