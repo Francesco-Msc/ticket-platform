@@ -22,7 +22,7 @@ public class TicketService {
     }
 
     public List<Ticket> findByQuery(String query){
-        return ticketRepo.findByTitleContains(query);
+        return ticketRepo.findByTitleContaining(query);
     }
 
     public Ticket create(Ticket addTicket){

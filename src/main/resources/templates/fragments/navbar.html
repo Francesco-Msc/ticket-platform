@@ -11,8 +11,8 @@
                     <li><a th:href="@{/ticket/create}" class="nav-link px-2 link-dark">New ticket</a></li>
                     <li th:if="${isDetail}"><a th:href="@{|/ticket/edit/*{id}|}" class="nav-link px-2 link-dark">Update ticket</a></li>
                 </ul>
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control" placeholder="Ricerca..." aria-label="Ricerca">
+                <form th:action="@{/dashboard/search}" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <input type="search" class="form-control" name="query" placeholder="Ricerca..." aria-label="Ricerca">
                 </form>
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
