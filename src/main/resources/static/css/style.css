@@ -1,0 +1,23 @@
+.custom-table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+body{
+    background-color: #504f4fe4;
+}
+
+.status-circle {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.green {
+    background-color: green;
+}
+.red {
+    background-color: red;
+}
