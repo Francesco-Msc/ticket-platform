@@ -3,6 +3,7 @@ package org.milestone.platform.ticket_platform.controller;
 import java.time.LocalDateTime;
 
 import org.milestone.platform.ticket_platform.enums.TicketStatus;
+import org.milestone.platform.ticket_platform.model.Note;
 import org.milestone.platform.ticket_platform.model.Ticket;
 import org.milestone.platform.ticket_platform.service.CategoryService;
 import org.milestone.platform.ticket_platform.service.TicketService;
@@ -36,6 +37,7 @@ public class TicketController {
     public String show(@PathVariable("id") Integer id, Model model){
         model.addAttribute("tickets", ticketService.getById(id));
         model.addAttribute("isDetail", true);
+        model.addAttribute("notes", ticketService.getNotesByTicketId(id));
         return "dashboard/show";
     }
 
@@ -57,6 +59,13 @@ public class TicketController {
             return "dashboard/create-edit";
         }
 
+        if (addTicket.getNotes() != null) {
+            for (Note note : addTicket.getNotes()) {
+                note.setTicket(addTicket);
+                note.setUser(userService.getById(1));                           //NEED TO BE FIXED USER ID
+            }
+        }
+
         ticketService.create(addTicket);
         return "redirect:/dashboard";
     }
@@ -67,6 +76,7 @@ public class TicketController {
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("users", userService.availableOperators(userService.findAll()));
         model.addAttribute("stauses", TicketStatus.values());
+        model.addAttribute("notes", ticketService.getNotesByTicketId(id));
         return "dashboard/create-edit";
     }
 
@@ -76,12 +86,15 @@ public class TicketController {
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("users", userService.availableOperators(userService.findAll()));
             model.addAttribute("stauses", TicketStatus.values());
+            model.addAttribute("notes", ticketService.getNotesByTicketId(id));
             return "dashboard/create-edit";
         }
+
         Ticket existingTicket = ticketService.getById(id);
         updaTicket.setUpdated_at(LocalDateTime.now());
         updaTicket.setCreation_date(existingTicket.getCreation_date());
         model.addAttribute("stauses", TicketStatus.values());
+
         ticketService.update(updaTicket);
         return "redirect:/ticket/" + id;
     }
