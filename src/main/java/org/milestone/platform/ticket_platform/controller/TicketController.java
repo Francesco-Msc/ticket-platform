@@ -76,7 +76,6 @@ public class TicketController {
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("users", userService.availableOperators(userService.findAll()));
         model.addAttribute("stauses", TicketStatus.values());
-        model.addAttribute("notes", ticketService.getNotesByTicketId(id));
         return "dashboard/create-edit";
     }
 
@@ -86,7 +85,6 @@ public class TicketController {
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("users", userService.availableOperators(userService.findAll()));
             model.addAttribute("stauses", TicketStatus.values());
-            model.addAttribute("notes", ticketService.getNotesByTicketId(id));
             return "dashboard/create-edit";
         }
 
