@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="~{fragments/head-script :: head}" \>
+    <title>Dashboard</title>
+</head>
+<body>
+    <header>
+        <th:block th:replace="~{fragments/navbar :: navbar}" \>
+    </header>
+    <main>
+        <div class="container">
+            <table class="text-center custom-table table table-hover my-3 border rounded shadow p-3 mb-5">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>See assignments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="operator : ${users}" th:object="${operator}">
+                        <td th:text="*{name}"></td>
+                        <td th:text="*{email}"></td>
+                        <td th:if="*{isAvailable}">
+                            <span class="status-circle green"></span> Online
+                        </td>
+                        <td th:unless="*{isAvailable}">
+                            <span class="status-circle red"></span> Offline
+                        </td>
+                        <td>
+                            <a th:href="@{/users/{id}(id=*{id})}">
+                                <i class="fa-solid fa-link"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <th:block th:replace="~{fragments/head-script :: script}" \></th:block>
+</body>
+</html>
