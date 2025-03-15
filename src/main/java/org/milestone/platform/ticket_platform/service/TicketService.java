@@ -1,5 +1,6 @@
 package org.milestone.platform.ticket_platform.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.milestone.platform.ticket_platform.model.Note;
@@ -31,6 +32,15 @@ public class TicketService {
     }
 
     public void create(Ticket addTicket){
+        if (addTicket.getNotes() != null) {
+            List<Note> notEmptyNotes = new ArrayList<>();
+            for (Note note : addTicket.getNotes()) {
+                if (note.getText() != null && !note.getText().trim().isEmpty()) {
+                    notEmptyNotes.add(note);
+                }
+            }
+            addTicket.setNotes(notEmptyNotes);
+        }
         ticketRepo.save(addTicket);
         if (addTicket.getNotes() != null && !addTicket.getNotes().isEmpty()) {
             for (Note note : addTicket.getNotes()) {
