@@ -2,7 +2,9 @@ package org.milestone.platform.ticket_platform.service;
 
 import java.util.List;
 
+import org.milestone.platform.ticket_platform.model.Note;
 import org.milestone.platform.ticket_platform.model.Ticket;
+import org.milestone.platform.ticket_platform.repository.NoteRepository;
 import org.milestone.platform.ticket_platform.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ public class TicketService {
     
     @Autowired
     private TicketRepository ticketRepo;
+
+    @Autowired
+    private NoteRepository noteRepo;
     
     public List<Ticket> findAll(){
         return ticketRepo.findAll();
@@ -25,11 +30,21 @@ public class TicketService {
         return ticketRepo.findByTitleContaining(query);
     }
 
-    public Ticket create(Ticket addTicket){
-        return ticketRepo.save(addTicket);
+    public void create(Ticket addTicket){
+        ticketRepo.save(addTicket);
+        if (addTicket.getNotes() != null && !addTicket.getNotes().isEmpty()) {
+            for (Note note : addTicket.getNotes()) {
+                noteRepo.save(note);
+            }
+        }
     }
 
     public Ticket update(Ticket updaTicket){
         return ticketRepo.save(updaTicket);
     }
+
+    public List<Note> getNotesByTicketId(Integer ticketId){
+        return noteRepo.findByTicketId(ticketId);
+    }
+
 }
