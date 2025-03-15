@@ -11,16 +11,37 @@
     <th:block th:replace="~{fragments/navbar :: navbar}" \>
   </header>
   <main>
-    <div class="container text-center">
-      <div class="card text-center" th:each="ticket : ${tickets}" th:object="${ticket}">
-        <div class="card-header">
-          <h4 th:text="*{title}"></h4>
+    <div class="container">
+      <div class="card" th:each="ticket : ${tickets}" th:object="${ticket}">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h3 class="mx-auto" th:text="*{title}"></h3>
+          <div>
+            <a class="mx-auto" th:href="@{/dashboard}"><i class="fa-solid fa-x"></i></a>
+          </div>
         </div>
         <div class="card-body">
-          <p th:text="*{description}" class="card-title"></p>
-          <p th:text="*{category.name}" class="card-text"></p>
-          <p th:text="*{status}"></p>
-          <p th:text="*{user.name}"></p>
+          <div class="mb-2">
+            <span class="fw-bold">Description:</span>
+            <p th:text="*{description}" class="card-description"></p>
+          </div>
+          <div class="mb-2">
+            <span class="fw-bold">Category:</span>
+            <p th:text="*{category.name}" class="card-text"></p>
+          </div>
+          <div class="mb-2">
+            <span class="fw-bold">Status:</span>
+            <p th:text="*{status}"></p>
+          </div>
+          <div class="mb-2">
+            <span class="fw-bold">Assigned to:</span>
+            <p th:text="*{user.name}"></p>
+          </div>
+          <div  class="mb-2" th:if="${notes != null}">
+            <span class="fw-bold">Notes:</span></span>
+            <ul>
+                <li th:each="note : ${notes}" th:text="${note.text}"></li>
+            </ul>
+          </div>
         </div>
         <div class="card-footer text-body-secondary">
           <div>
@@ -33,7 +54,6 @@
           </div>
         </div>
       </div>
-      <a th:href="@{/dashboard}" class="btn btn-primary mt-4">Go back</a>
     </div>
     </div>
   </main>
