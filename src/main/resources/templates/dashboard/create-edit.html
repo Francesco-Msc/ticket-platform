@@ -57,12 +57,6 @@
                         <option th:each="status : ${stauses}" th:value="${status}" th:text="${status.name()}"></option>
                     </select>
                 </div>
-                <div th:if="${notes != null}">
-                    <h5>Notes:</h5>
-                    <ul>
-                        <li th:each="note : ${notes}" th:text="${note.text}"></li>
-                    </ul>
-                  </div>
                 <div th:if="${create}" class="form-floating">
                     <textarea th:field="*{notes[0].text}" class="form-control" id="noteText" name="notes[0].text" placeholder="Write your note here" style="height: 100px"></textarea>
                     <label for="noteText">Notes</label>
