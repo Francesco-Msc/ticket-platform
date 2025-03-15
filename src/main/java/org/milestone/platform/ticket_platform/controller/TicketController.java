@@ -1,5 +1,8 @@
 package org.milestone.platform.ticket_platform.controller;
 
+import java.time.LocalDateTime;
+
+import org.milestone.platform.ticket_platform.enums.TicketStatus;
 import org.milestone.platform.ticket_platform.model.Ticket;
 import org.milestone.platform.ticket_platform.service.CategoryService;
 import org.milestone.platform.ticket_platform.service.TicketService;
@@ -63,6 +66,7 @@ public class TicketController {
         model.addAttribute("ticket", ticketService.getById(id));
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("users", userService.availableOperators(userService.findAll()));
+        model.addAttribute("stauses", TicketStatus.values());
         return "dashboard/create-edit";
     }
 
@@ -71,10 +75,13 @@ public class TicketController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("users", userService.availableOperators(userService.findAll()));
+            model.addAttribute("stauses", TicketStatus.values());
             return "dashboard/create-edit";
         }
         Ticket existingTicket = ticketService.getById(id);
+        updaTicket.setUpdated_at(LocalDateTime.now());
         updaTicket.setCreation_date(existingTicket.getCreation_date());
+        model.addAttribute("stauses", TicketStatus.values());
         ticketService.update(updaTicket);
         return "redirect:/ticket/" + id;
     }
