@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.milestone.platform.ticket_platform.enums.TicketStatus;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -41,7 +40,7 @@ public class Ticket {
     private TicketStatus status;
     @CreationTimestamp
     private LocalDateTime creation_date;
-    @UpdateTimestamp
+
     private LocalDateTime updated_at;
     @ManyToOne
     @JsonBackReference

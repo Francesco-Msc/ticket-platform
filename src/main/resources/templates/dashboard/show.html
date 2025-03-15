@@ -27,7 +27,7 @@
             <div>Created:</div>
             <p th:text="*{formattedCreationDate}"></p>
           </div>
-          <div>
+          <div th:if="${ticket.updated_at != null}">
             <div>Last updated on:</div>
             <p th:text="*{formattedUpdatedAt}"></p>
           </div>
