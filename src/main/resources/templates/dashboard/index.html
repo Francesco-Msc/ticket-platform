@@ -21,7 +21,7 @@
                 <tbody>
                     <tr th:each="ticket : ${tickets}" th:object="${ticket}">
                         <td th:text="*{title}"></td>
-                        <td th:text="*{creation_date}"></td>
+                        <td th:text="*{formattedCreationDate}"></td>
                         <td>
                             <a th:href="@{/ticket/{id}(id=*{id})}">
                                 <i class="fa-solid fa-link"></i>

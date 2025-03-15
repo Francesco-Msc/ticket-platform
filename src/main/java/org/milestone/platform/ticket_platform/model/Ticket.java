@@ -1,6 +1,7 @@
 package org.milestone.platform.ticket_platform.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +26,8 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "tickets")
 public class Ticket {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -128,4 +131,11 @@ public class Ticket {
         this.category = category;
     }
 
+    public String getFormattedCreationDate(){
+        return creation_date.format(FORMATTER);
+    }
+
+    public String getFormattedUpdatedAt(){
+        return updated_at.format(FORMATTER);
+    }
 }
