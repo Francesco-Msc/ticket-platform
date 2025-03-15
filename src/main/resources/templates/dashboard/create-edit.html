@@ -51,18 +51,22 @@
                         <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
                     </select>
                 </div>
-                <div th:unless="${create}">
+                <div class="mb-3" th:unless="${create}">
                     <label class="mb-2" for="status">Status:</label> <br>
                     <select th:field="*{status}" id="status" class="form-select" aria-label="status">
                         <option th:each="status : ${stauses}" th:value="${status}" th:text="${status.name()}"></option>
                     </select>
                 </div>
-                <!-- <div class="mb-3">
-                    <div class="form-floating">
-                        <textarea th:field="${note.text}" class="form-control" placeholder="Notes" id="notes" style="height: 100px"></textarea>
-                        <label for="notes">Notes</label>
-                      </div>
-                </div> -->
+                <div th:if="${notes != null}">
+                    <h5>Notes:</h5>
+                    <ul>
+                        <li th:each="note : ${notes}" th:text="${note.text}"></li>
+                    </ul>
+                  </div>
+                <div th:if="${create}" class="form-floating">
+                    <textarea th:field="*{notes[0].text}" class="form-control" id="noteText" name="notes[0].text" placeholder="Write your note here" style="height: 100px"></textarea>
+                    <label for="noteText">Notes</label>
+                </div>
                 <div class="d-flex justify-content-center">
                     <input type="submit" value="Save" class="px-4 btn btn-primary my-2"></input>
                 </div>
