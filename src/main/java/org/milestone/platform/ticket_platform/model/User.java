@@ -24,18 +24,25 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @NotBlank(message = "Name field can not be blank, empty or null")
     private String name;
+
     @NotBlank(message = "Email field can not be blank, empty or null")
     private String email;
+
     @NotBlank(message = "Password field can not be blank, empty or null")
     private String password;
+
     @NotNull(message = "Status can not be null")
     private boolean isAvailable;
+
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
+
     @OneToMany(mappedBy = "user")
     private List<Note> notes;
+    
     @ManyToMany( fetch = FetchType.EAGER )
     @JoinTable(
         name = "role_user",

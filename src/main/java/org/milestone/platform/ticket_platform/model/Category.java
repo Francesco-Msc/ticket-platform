@@ -16,8 +16,10 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @NotBlank(message = "Name field can not be blank, empty o rnull")
     private String name;
+    
     @OneToMany(mappedBy = "category")
     private List<Ticket> tickets;
 
