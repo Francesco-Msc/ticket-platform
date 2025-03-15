@@ -10,11 +10,12 @@
     </header>
     <main>
         <div class="container">
-            <table class="text-center table table-hover my-3 border rounded shadow p-3 mb-5" th:if="${tickets.size() > 0}">
+            <table class="text-center custom-table table table-hover my-3 border rounded shadow p-3 mb-5" th:if="${tickets.size() > 0}">
                 <thead>
                     <tr>
                         <th>Title</th>
                         <th>Creation date</th>
+                        <th>Status</th>
                         <th>See details</th>
                     </tr>
                 </thead>
@@ -22,6 +23,7 @@
                     <tr th:each="ticket : ${tickets}" th:object="${ticket}">
                         <td th:text="*{title}"></td>
                         <td th:text="*{formattedCreationDate}"></td>
+                        <td th:text="*{status}"></td>
                         <td>
                             <a th:href="@{/ticket/{id}(id=*{id})}">
                                 <i class="fa-solid fa-link"></i>
@@ -30,7 +32,10 @@
                     </tr>
                 </tbody>
             </table>
-            <div th:unless="${tickets.size() > 0}">No tickets available</div>
+            <div th:unless="${tickets.size() > 0}" class="container alert alert-warning mt-5 text-center" role="alert">
+                <h2>There are no tickets to display</h2>
+                <a th:href="@{/dashboard}" class="btn btn-primary mt-3" role="button">Homepage</a>
+            </div>
         </div>
     </main>
     <th:block th:replace="~{fragments/head-script :: script}" \></th:block>
