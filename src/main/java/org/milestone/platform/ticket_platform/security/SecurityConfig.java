@@ -15,12 +15,18 @@ public class SecurityConfig {
     @SuppressWarnings({ "removal", "deprecation" })
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+            .requestMatchers("/users").hasAnyAuthority("Admin")
+            .requestMatchers("/ticket/create").hasAnyAuthority("Admin")
             .requestMatchers("/**").permitAll()
             .and()
             .formLogin()
                 .defaultSuccessUrl("/dashboard", true)
+                .failureUrl("/login?error=true")
             .and()
             .logout()
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID") 
             .and().exceptionHandling();
         return http.build();
     }
