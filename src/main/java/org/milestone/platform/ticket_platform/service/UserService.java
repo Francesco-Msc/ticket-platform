@@ -2,6 +2,7 @@ package org.milestone.platform.ticket_platform.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.milestone.platform.ticket_platform.model.Ticket;
 import org.milestone.platform.ticket_platform.model.User;
@@ -38,5 +39,9 @@ public class UserService {
 
     public User getById(Integer id){
         return userRepo.findById(id).get();
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepo.findByUsername(username);
     }
 }
