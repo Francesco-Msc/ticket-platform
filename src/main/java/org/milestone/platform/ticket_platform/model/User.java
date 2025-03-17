@@ -26,7 +26,7 @@ public class User {
     private Integer id;
 
     @NotBlank(message = "Name field can not be blank, empty or null")
-    private String name;
+    private String username;
 
     @NotBlank(message = "Email field can not be blank, empty or null")
     private String email;
@@ -71,12 +71,16 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isIsAvailable() {
+        return this.isAvailable;
     }
 
     public String getEmail() {
