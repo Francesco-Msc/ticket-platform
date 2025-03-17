@@ -1,6 +1,7 @@
 package org.milestone.platform.ticket_platform.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.milestone.platform.ticket_platform.enums.TicketStatus;
 import org.milestone.platform.ticket_platform.model.Note;
@@ -96,4 +97,31 @@ public class TicketController {
         ticketService.update(updaTicket);
         return "redirect:/ticket/" + id;
     }
+
+    @GetMapping("/note/{id}")
+    public String note(@PathVariable("id") Integer id, Model model){
+        Note note = new Note();
+        note.setTicket(ticketService.getById(id));
+        model.addAttribute("note", note);
+        return "notes/create-note";
+    }
+
+    @GetMapping("/{id}/notes")
+    public String showNotes(@PathVariable("id") Integer id, Model model) {
+        Ticket ticket = ticketService.getById(id);
+        
+        if (ticket == null) {
+            model.addAttribute("error", "Ticket non trovato");
+            return "error";
+        }
+
+        List<Note> notes = ticketService.getNotesByTicketId(id);
+
+        model.addAttribute("ticket", ticket);
+        model.addAttribute("notes", notes);
+        model.addAttribute("isNotes", true);
+
+        return "notes/show-notes";
+    }
+
 }
