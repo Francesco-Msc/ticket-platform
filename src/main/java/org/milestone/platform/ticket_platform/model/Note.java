@@ -46,7 +46,6 @@ public class Note {
         this.createdAt = createdAt;
     }
 
-
     public Integer getId() {
         return this.id;
     }
@@ -77,6 +76,10 @@ public class Note {
 
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
+    }
+
+    public String getFormattedCreationDate(){
+        return createdAt.format(Ticket.FORMATTER);
     }
 
 }
