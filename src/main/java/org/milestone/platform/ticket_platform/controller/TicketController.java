@@ -6,10 +6,12 @@ import java.util.List;
 import org.milestone.platform.ticket_platform.enums.TicketStatus;
 import org.milestone.platform.ticket_platform.model.Note;
 import org.milestone.platform.ticket_platform.model.Ticket;
+import org.milestone.platform.ticket_platform.model.User;
 import org.milestone.platform.ticket_platform.service.CategoryService;
 import org.milestone.platform.ticket_platform.service.TicketService;
 import org.milestone.platform.ticket_platform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,18 +54,19 @@ public class TicketController {
     }
 
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("ticket") Ticket addTicket, BindingResult bindingResult,  Model model){
+    public String store(@Valid @ModelAttribute("ticket") Ticket addTicket, BindingResult bindingResult, Authentication authentication,  Model model){
         if (bindingResult.hasErrors()) {
             model.addAttribute("create", true);
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("users", userService.availableOperators(userService.findAll()));
             return "dashboard/create-edit";
         }
+        User loggedUser = userService.getCurrentUser();
 
         if (addTicket.getNotes() != null) {
             for (Note note : addTicket.getNotes()) {
                 note.setTicket(addTicket);
-                note.setUser(userService.getById(1));                           //NEED TO BE FIXED USER ID
+                note.setUser(loggedUser);                           //NEED TO BE cheked USER ID
             }
         }
 

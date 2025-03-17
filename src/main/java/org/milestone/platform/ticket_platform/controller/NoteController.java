@@ -31,10 +31,7 @@ public class NoteController {
         if (bindingResult.hasErrors()) {
             return "notes/create-note";
         }
-
-        String username = authentication.getName();
-        User loggedUser = userService.findByUsername(username)
-                                   .orElseThrow(() -> new RuntimeException("User not found"));
+        User loggedUser = userService.getCurrentUser();
         
         addNote.setUser(loggedUser);
         addNote.setCreatedAt(LocalDateTime.now());
