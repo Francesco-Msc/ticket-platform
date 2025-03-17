@@ -1,11 +1,14 @@
 package org.milestone.platform.ticket_platform.controller;
 
+import java.util.List;
+
+import org.milestone.platform.ticket_platform.model.Ticket;
 import org.milestone.platform.ticket_platform.model.User;
 import org.milestone.platform.ticket_platform.service.TicketService;
 import org.milestone.platform.ticket_platform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,18 +28,15 @@ public class DashboardController {
     @GetMapping
     public String index(Model model, Authentication authentication) {
         User loggedUser = userService.getCurrentUser();
-
-        boolean isAdmin = false;
-        for (GrantedAuthority authority : authentication.getAuthorities()) {
-            if (authority.getAuthority().equals("Admin")) {
-                isAdmin = true;
-                break;
-            }
+       if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Admin"))) {
+            List<Ticket> tickets = ticketService.findAll();
+            model.addAttribute("tickets", tickets);
+            model.addAttribute("isAdmin", true);
+        } else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Operator"))) {
+            List<Ticket> tickets = ticketService.getTicketsAssignedToUser(loggedUser);
+            model.addAttribute("tickets", tickets);
+            model.addAttribute("isAdmin", false);
         }
-        if (isAdmin) {
-            model.addAttribute("tickets", ticketService.findAll());
-        }
-        model.addAttribute("tickets", ticketService.getTicketsAssignedToUser(loggedUser));
         return "dashboard/index";
     }
 
