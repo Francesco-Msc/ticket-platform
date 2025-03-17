@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     <tr th:each="operator : ${users}" th:object="${operator}">
-                        <td th:text="*{name}"></td>
+                        <td th:text="*{username}"></td>
                         <td th:text="*{email}"></td>
                         <td th:if="*{isAvailable}">
                             <span class="status-circle green"></span> Online
