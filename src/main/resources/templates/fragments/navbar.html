@@ -4,9 +4,9 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a th:href="@{/dashboard}" class="nav-link px-2 link-secondary">Overview</a></li>
-                    <li><a th:href="@{/users}" class="nav-link px-2 link-dark">Operators</a></li>
-                    <li><a th:href="@{/ticket/create}" class="nav-link px-2 link-dark">New ticket</a></li>
-                    <li th:if="${isDetail}"><a th:href="@{|/ticket/edit/*{id}|}" class="nav-link px-2 link-dark">Update ticket</a></li>
+                    <li sec:authorize="hasAuthority('Admin')"><a th:href="@{/users}" class="nav-link px-2 link-dark">Operators</a></li>
+                    <li sec:authorize="hasAuthority('Admin')"><a th:href="@{/ticket/create}" class="nav-link px-2 link-dark">New ticket</a></li>
+                    <li sec:authorize="hasAuthority('Admin')" th:if="${isDetail}"><a th:href="@{|/ticket/edit/*{id}|}" class="nav-link px-2 link-dark">Update ticket</a></li>
                     <li th:if="${isNotes}"><a th:href="@{|/ticket/note/*{id}|}" class="nav-link px-2 link-dark">Add note</a></li>
                 </ul>
                 <form th:action="@{/dashboard/search}" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -17,7 +17,7 @@
                         data-bs-toggle="dropdown" aria-expanded="false"> <img src="/img/admin.png" alt="mdo"
                             class="rounded-circle" width="32" height="32"> </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                     </ul>
                 </div>
             </div>
