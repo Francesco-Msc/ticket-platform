@@ -47,4 +47,9 @@ public class Category {
         this.tickets = tickets;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
 }
