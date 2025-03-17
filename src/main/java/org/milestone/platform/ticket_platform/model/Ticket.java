@@ -2,7 +2,6 @@ package org.milestone.platform.ticket_platform.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,7 +26,7 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "tickets")
 public class Ticket {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +52,7 @@ public class Ticket {
     private User user;
 
     @OneToMany(mappedBy = "ticket")
-    private List<Note> notes = new ArrayList<>();
+    private List<Note> notes;
     
     @ManyToOne
     @JsonBackReference
