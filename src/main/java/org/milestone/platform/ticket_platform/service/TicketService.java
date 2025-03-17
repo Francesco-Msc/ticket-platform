@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.milestone.platform.ticket_platform.model.Note;
 import org.milestone.platform.ticket_platform.model.Ticket;
+import org.milestone.platform.ticket_platform.model.User;
 import org.milestone.platform.ticket_platform.repository.NoteRepository;
 import org.milestone.platform.ticket_platform.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +58,7 @@ public class TicketService {
         return noteRepo.findByTicketId(ticketId);
     }
 
+    public List<Ticket> getTicketsAssignedToUser(User user) {
+        return ticketRepo.findByUserId(user.getId());
+    }
 }
