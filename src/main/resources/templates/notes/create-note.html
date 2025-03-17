@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <th:block th:replace="~{fragments/head-script :: head}" \>
+        <title>Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <th:block th:replace="~{fragments/navbar :: navbar}" \>
+    </header>
+    <main>
+        <div class="container shadow p-3 mt-5 bg-white border rounded">
+            <h3 class="text-center mt-3">Add note</h3>
+
+            <form th:action="@{/notes/create}" method="post"
+                th:object="${note}">
+                <input type="hidden" th:field="*{ticket.id}" />
+                <div class="form-floating">
+                    <textarea th:field="*{text}" class="form-control" id="noteText" name="text" placeholder="Write your note here" style="height: 100px"></textarea>
+                    <label for="noteText">Notes</label>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <input type="submit" value="Save" class="px-4 btn btn-primary my-2"></input>
+                </div>
+            </form>
+        </div>
+    </main>
+    <th:block th:replace="~{fragments/head-script :: script}" \></th:block>
+</body>
+
+</html>

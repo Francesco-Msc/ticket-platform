@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <th:block th:replace="~{fragments/head-script :: head}" \>
+        <title>Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <th:block th:replace="~{fragments/navbar :: navbar}" \>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div th:each="note : ${notes}" th:object="${note}" class="col-md-4 mb-4">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <p th:text="${note.text}" class="card-text"></p>
+                        </div>
+                        <div class="card-footer text-body-secondary">
+                            <div>
+                                <div>Created:</div>
+                                <p th:text="*{formattedCreationDate}"></p>
+                            </div>
+                            <div>
+                                <div>Author:</div>
+                                <p th:text="*{user.username}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block th:replace="~{fragments/head-script :: script}" \></th:block>
+</body>
+
+</html>
