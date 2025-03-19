@@ -20,34 +20,56 @@
         <div class="container">
             <div class="card">
                 <div class="card-header text-center">
-                    <h3>Welcome <span sec:authentication="name"></span></h3>
+                    <h3 class="my-2">Welcome <span sec:authentication="name"></span></h3>
                 </div>
                 <div class="row">
-                    <div class="col-6 card-body border-end">
-                        All tickets are completed
+                    <div th:if="${openTickets.size() > 0}" class="col-6 card-body border-end mt-2">
+                        <table class="custom-table table table-hover my-3 border rounded shadow p-3 mx-1">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="ticket : ${openTickets}">
+                                    <td th:text="${ticket.title}"></td>
+                                    <td th:text="${ticket.status}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-4 card-body d-flex justify-content-between align-items-center">
-                        <div> Status: 
-                            <span th:if="*{isAvailable}"><span class="ms-2 status-circle green"></span> Online</span>
-                            <span th:unless="*{isAvailable}"> <span class="ms-2 status-circle red"></span> Offline</span>
+                    <div th:unless="${openTickets.size() > 0}" class="col-6 card-body border-end">
+                        <div class="mt-2 text-center alert alert-info text-center mx-3">
+                            <h3 class="m-0">All tickets are completed</h3>
                         </div>
-                        <div>
-                            <form th:if="*{isAvailable}" th:action="@{/users/updateUserStatus}" method="post">
-                                <input type="hidden" name="isAvailable" value="false" />
-                                <button class="btn btn-sm btn-danger me-3" type="submit">Go Offline</button>
-                            </form>
-                            <form th:unless="*{isAvailable}" th:action="@{/users/updateUserStatus}" method="post">
-                                <input type="hidden" name="isAvailable" value="true" />
-                                <button class="btn btn-sm btn-success me-3" type="submit">Go Online</button>
-                            </form>
+                    </div>
+                    <div class="col-4">
+                        <div class="card-body d-flex justify-content-between align-items-center mt-2 mb-1">
+                            <div> 
+                                Status: 
+                                <span th:if="*{isAvailable}"><span class="ms-2 status-circle green"></span> Online</span>
+                                <span th:unless="*{isAvailable}"> <span class="ms-2 status-circle red"></span> Offline</span>
+                            </div>
+                            <div>
+                                <form th:if="*{isAvailable}" th:action="@{/users/updateUserStatus}" method="post">
+                                    <input type="hidden" name="isAvailable" value="false" />
+                                    <button class="btn btn-sm btn-danger me-3" type="submit">Go Offline</button>
+                                </form>
+                                <form th:unless="*{isAvailable}" th:action="@{/users/updateUserStatus}" method="post">
+                                    <input type="hidden" name="isAvailable" value="true" />
+                                    <button class="btn btn-sm btn-success me-3" type="submit">Go Online</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div th:if="${errorMessage}" class="me-3">
+                            <div class="alert alert-danger text-center w-100">
+                                <p class="m-0" th:text="${errorMessage}"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-body-secondary">
-                    <div>
-
-                    </div>
-                </div>
+                
             </div>
         </div>
     </main>
