@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <th:block th:replace="~{fragments/head-script :: head}"></th:block>
+    <title>Personal Area</title>
+</head>
+
+<body>
+    <header>
+        <th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
+    </header>
+
+    <main>
+        <div class="arrow-container">
+            <a th:href="@{/dashboard}" class="me-3 text-white">
+                <i class="fa-solid fa-arrow-left fa-lg"></i>
+            </a>
+        </div>
+        <div class="container">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Welcome <span sec:authentication="name"></span></h3>
+                </div>
+                <div class="row">
+                    <div class="col-6 card-body border-end">
+                        All tickets are completed
+                    </div>
+                    <div class="col-4 card-body d-flex justify-content-between align-items-center">
+                        <div> Status: 
+                            <span th:if="*{isAvailable}"><span class="ms-2 status-circle green"></span> Online</span>
+                            <span th:unless="*{isAvailable}"> <span class="ms-2 status-circle red"></span> Offline</span>
+                        </div>
+                        <div>
+                            <form th:if="*{isAvailable}" th:action="@{/users/updateUserStatus}" method="post">
+                                <input type="hidden" name="isAvailable" value="false" />
+                                <button class="btn btn-sm btn-danger me-3" type="submit">Go Offline</button>
+                            </form>
+                            <form th:unless="*{isAvailable}" th:action="@{/users/updateUserStatus}" method="post">
+                                <input type="hidden" name="isAvailable" value="true" />
+                                <button class="btn btn-sm btn-success me-3" type="submit">Go Online</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-body-secondary">
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <th:block th:replace="~{fragments/head-script :: script}"></th:block>
+</body>
+
+</html>
