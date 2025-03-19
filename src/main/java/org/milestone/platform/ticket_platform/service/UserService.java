@@ -54,4 +54,8 @@ public class UserService {
         return userRepo.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
+
+    public void update(User currentUser){
+        userRepo.save(currentUser);
+    }
 }
