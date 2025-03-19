@@ -24,7 +24,7 @@
                 th:object="${ticket}">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title:</label>
-                    <input type="text" class="form-control" id="title" th:field="*{title}" th:errorClass="is-invalid">
+                    <input type="text" class="form-control" id="title" th:field="*{title}" th:errorClass="is-invalid" required>
 
                     <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
                         <ul>
@@ -35,7 +35,7 @@
                 <div class="mb-3">
                     <label for="description" class="form-label">Description:</label>
                     <input type="text" class="form-control" id="description" th:field="*{description}"
-                        th:errorClass="is-invalid">
+                        th:errorClass="is-invalid" required>
 
                     <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
                         <ul>
