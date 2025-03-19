@@ -10,7 +10,7 @@
     </header>
     <main>
         <div class="container">
-            <table class="text-center custom-table table table-hover my-3 border rounded shadow p-3 mb-5" th:if="${tickets.size() > 0}">
+            <table class="text-center custom-table table table-hover my-3 border rounded shadow p-3 mb-5" th:if="${tickets != null and tickets.size() > 0}">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -32,7 +32,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div th:unless="${tickets.size() > 0}" class="container alert alert-warning mt-5 text-center" role="alert">
+            <div th:unless="${tickets != null and tickets.size() > 0}" class="container alert alert-warning mt-5 text-center" role="alert">
                 <h2>There are no tickets to display</h2>
                 <a th:href="@{/dashboard}" class="btn btn-primary mt-3" role="button">Homepage</a>
             </div>
