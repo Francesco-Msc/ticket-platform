@@ -40,6 +40,7 @@
           <a th:href="@{|/ticket/*{id}/notes|}" class="btn btn-primary mb-2" type="button">
             See notes
           </a>
+          <a sec:authorize="hasAuthority('Operator')" th:href="@{|/ticket/*{id}/status|}" class="btn btn-primary mb-2" type="button" >Change status</a>
         </div>
         <div class="card-footer text-body-secondary">
           <div>
