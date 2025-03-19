@@ -35,8 +35,9 @@ public class NoteController {
         
         addNote.setUser(loggedUser);
         addNote.setCreatedAt(LocalDateTime.now());
-        
+
         noteService.create(addNote);
-        return "redirect:/dashboard"; 
+        Integer ticketId = addNote.getTicket().getId();
+        return "redirect:/ticket/" + ticketId + "/notes"; 
     }
 }
