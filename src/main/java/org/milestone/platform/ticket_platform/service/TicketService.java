@@ -37,6 +37,10 @@ public class TicketService {
         return ticketRepo.findByTitleContaining(query);
     }
 
+    public List<Ticket> findByQueryAndUser(String query, User user) {
+        return ticketRepo.findByTitleContainingAndUser(query, user);
+    }
+
     public void create(Ticket addTicket){
         if (addTicket.getNotes() != null) {
             List<Note> notEmptyNotes = new ArrayList<>();
