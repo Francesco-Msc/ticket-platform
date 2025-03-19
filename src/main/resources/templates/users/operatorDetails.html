@@ -23,7 +23,7 @@
                     <h3 class="mx-auto" th:text="${user.username}"></h3>
                 </div>
                 <div class="card-body">
-                    <div class="mb-2" th:if="${not #lists.isEmpty(user.tickets)}">
+                    <div class="mb-2" th:if="${openTickets.size() > 0}">
                         <h5 class="text-center">Assignments:</h5>
                         <table class="text-center custom-table table table-hover my-3 border rounded shadow p-3 mb-5">
                             <thead>
@@ -33,16 +33,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="ticket : ${user.tickets}">
+                                <tr th:each="ticket : ${openTickets}">
                                     <td th:text="${ticket.title}"></td>
                                     <td th:text="${ticket.description}"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div th:unless="${not #lists.isEmpty(user.tickets)}"
+                    <div th:unless="${openTickets.size() > 0}"
                         class="container alert alert-warning mt-5 text-center" role="alert">
-                        <h2>The operator don't have tickets assigned.</h2>
+                        <h2>The operator don't have open tickets assigned.</h2>
                     </div>
                 </div>
             </div>
