@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.milestone.platform.ticket_platform.enums.TicketStatus;
+import org.milestone.platform.ticket_platform.model.Role;
 import org.milestone.platform.ticket_platform.model.Ticket;
 import org.milestone.platform.ticket_platform.model.User;
 import org.milestone.platform.ticket_platform.repository.TicketRepository;
@@ -22,7 +24,22 @@ public class UserService {
     private TicketRepository ticketRepo;
 
     public List<User> findAll(){
-        return userRepo.findAll();
+        List<User> users = userRepo.findAll();
+        List<User> filteredUsers = new ArrayList<>();
+        
+        for (User user : users) {
+            boolean isAdmin = false;
+            for (Role role : user.getRoles()) {
+                if (role.getName().equals("Admin")) {
+                    isAdmin = true;
+                    break;
+                }
+            }
+            if (!isAdmin) {
+                filteredUsers.add(user);
+            }
+        }
+        return filteredUsers;
     }
 
     public List<Ticket> getTicketsByUserId(Integer userId) {
@@ -57,5 +74,15 @@ public class UserService {
 
     public void update(User currentUser){
         userRepo.save(currentUser);
+    }
+
+    public List<Ticket> getOpenTicketsByUser(User user){
+        List<Ticket> userOpenTickets = new ArrayList<>();
+        for (Ticket ticket : user.getTickets()) {
+            if (!ticket.getStatus().equals(TicketStatus.COMPLETED)) {
+                userOpenTickets.add(ticket);
+            }
+        }
+        return userOpenTickets;
     }
 }
