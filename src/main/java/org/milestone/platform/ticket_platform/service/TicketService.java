@@ -3,6 +3,7 @@ package org.milestone.platform.ticket_platform.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.milestone.platform.ticket_platform.enums.TicketStatus;
 import org.milestone.platform.ticket_platform.model.Note;
 import org.milestone.platform.ticket_platform.model.Ticket;
 import org.milestone.platform.ticket_platform.model.User;
@@ -60,5 +61,11 @@ public class TicketService {
 
     public List<Ticket> getTicketsAssignedToUser(User user) {
         return ticketRepo.findByUserId(user.getId());
+    }
+
+    public void updateStatus(Integer id, TicketStatus newStatus){
+        Ticket ticket = ticketRepo.findById(id).get();
+        ticket.setStatus(newStatus);
+        ticketRepo.save(ticket);
     }
 }
