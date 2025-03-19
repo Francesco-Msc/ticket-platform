@@ -31,13 +31,14 @@ public class UserController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model){
         model.addAttribute("user", userService.getById(id));
-        model.addAttribute("ticekts", userService.getTicketsByUserId(id));
+        model.addAttribute("openTickets", userService.getOpenTicketsByUser(userService.getById(id)));
         return "users/operatorDetails";
     }
 
     @GetMapping("/personal-area")
     public String personalArea(Model model){
         model.addAttribute("isAvailable", userService.getCurrentUser().getIsAvailable());
+        model.addAttribute("openTickets", userService.getOpenTicketsByUser(userService.getCurrentUser()));
         return "users/personal-area";
     }
 
@@ -47,9 +48,12 @@ public class UserController {
         if (ticketService.isTicketCompleted(currentUser)) {
             currentUser.setIsAvailable(isAvailable);
             userService.update(currentUser);
-            return "redirect:/users/personal-area";
-        } 
-        model.addAttribute("error", "Cannot go offline if there are still open tickets");
-        return "error";
+        } else {
+            model.addAttribute("errorMessage", "Cannot go offline if there are still open tickets");
+            model.addAttribute("isAvailable", currentUser.getIsAvailable());
+            model.addAttribute("openTickets", userService.getOpenTicketsByUser(userService.getCurrentUser()));
+            return "users/personal-area";
+        }
+        return "redirect:/users/personal-area";
     }
 }
