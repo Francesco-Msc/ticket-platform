@@ -15,8 +15,9 @@ public class SecurityConfig {
     @SuppressWarnings({ "removal", "deprecation" })
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .requestMatchers("/users").hasAnyAuthority("Admin")
-            .requestMatchers("/ticket/create").hasAnyAuthority("Admin")
+            .requestMatchers("/users").hasAuthority("Admin")
+            .requestMatchers("/users/personal-area").hasAuthority("Operator")
+            .requestMatchers("/ticket/create").hasAuthority("Admin")
             .requestMatchers("/**").permitAll()
             .and()
             .formLogin()
