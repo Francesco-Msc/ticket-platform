@@ -28,7 +28,7 @@ public class DashboardController {
     @GetMapping
     public String index(Model model, Authentication authentication) {
         User loggedUser = userService.getCurrentUser();
-       if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Admin"))) {
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Admin"))) {
             List<Ticket> tickets = ticketService.findAll();
             model.addAttribute("tickets", tickets);
             model.addAttribute("isAdmin", true);

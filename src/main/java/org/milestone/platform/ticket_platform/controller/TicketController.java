@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 
@@ -66,7 +67,7 @@ public class TicketController {
         if (addTicket.getNotes() != null) {
             for (Note note : addTicket.getNotes()) {
                 note.setTicket(addTicket);
-                note.setUser(loggedUser);                           //NEED TO BE cheked USER ID
+                note.setUser(loggedUser);
             }
         }
 
@@ -127,4 +128,16 @@ public class TicketController {
         return "notes/show-notes";
     }
 
+    @GetMapping("/{id}/status")
+    public String changeStatus(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("ticket", ticketService.getById(id));
+        model.addAttribute("stauses", TicketStatus.values());
+        return "tickets/change-status";
+    }
+
+    @PostMapping("/{id}/status")
+    public String updateStatus(@PathVariable("id") Integer id, @RequestParam("status") TicketStatus newStatus, Model model){
+        ticketService.updateStatus(id, newStatus);
+        return "redirect:/dashboard";
+    }
 }
