@@ -42,6 +42,7 @@ public class TicketController {
         model.addAttribute("tickets", ticketService.getById(id));
         model.addAttribute("isDetail", true);
         model.addAttribute("notes", ticketService.getNotesByTicketId(id));
+        model.addAttribute("isAvailable", userService.getCurrentUser().getIsAvailable());
         return "dashboard/show";
     }
 
