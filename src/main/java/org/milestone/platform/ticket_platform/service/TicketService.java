@@ -21,6 +21,9 @@ public class TicketService {
 
     @Autowired
     private NoteRepository noteRepo;
+
+    @Autowired
+    private UserService userService;
     
     public List<Ticket> findAll(){
         return ticketRepo.findAll();
@@ -69,5 +72,18 @@ public class TicketService {
         ticket.setStatus(newStatus);
         ticket.setUpdated_at(LocalDateTime.now());
         ticketRepo.save(ticket);
+    }
+
+    public Boolean isTicketCompleted(User user){
+        List<Ticket> tickets = userService.getTicketsByUserId(user.getId());
+        if (tickets.isEmpty()) {
+            return true;
+        }
+        for (Ticket ticket : tickets) {
+            if (!ticket.getStatus().equals(TicketStatus.COMPLETED)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
