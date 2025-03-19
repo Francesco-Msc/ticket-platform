@@ -1,5 +1,6 @@
 package org.milestone.platform.ticket_platform.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,7 @@ public class TicketService {
     public void updateStatus(Integer id, TicketStatus newStatus){
         Ticket ticket = ticketRepo.findById(id).get();
         ticket.setStatus(newStatus);
+        ticket.setUpdated_at(LocalDateTime.now());
         ticketRepo.save(ticket);
     }
 }
