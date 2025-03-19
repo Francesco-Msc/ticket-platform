@@ -41,8 +41,13 @@ public class DashboardController {
     }
 
     @GetMapping("/search")
-    public String findByKeyword(@RequestParam(name = "query") String query, Model model) {
-        model.addAttribute("tickets", ticketService.findByQuery(query));
+    public String findByKeyword(@RequestParam(name = "query") String query, Model model, Authentication authentication) {
+        User loggedUser = userService.getCurrentUser();
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Admin"))) {
+            model.addAttribute("tickets", ticketService.findByQuery(query));
+        } else {
+            model.addAttribute("tickets", ticketService.findByQueryAndUser(query, loggedUser));
+        }
         return "dashboard/index";
     }
 
