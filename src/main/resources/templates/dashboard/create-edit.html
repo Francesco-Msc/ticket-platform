@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:replace="~{fragments/head-script :: head}" \>
-        <title>Dashboard</title>
+        <title>Ticket Form</title>
 </head>
 
 <body>
@@ -11,7 +11,12 @@
         <th:block th:replace="~{fragments/navbar :: navbar}" \>
     </header>
     <main>
-        <div class="container shadow p-3 mt-5 bg-white border rounded">
+        <div class="arrow-container">
+            <a th:href="@{/dashboard}" class="me-3 text-white">
+              <i class="fa-solid fa-arrow-left fa-lg"></i>
+            </a>
+        </div>
+        <div class="container shadow p-3 bg-white border rounded">
             <h3 th:if="${create}" class="text-center mt-3">Open ticket</h3>
             <h3 th:unless="${create}" class="text-center mt-3">Editing ticket "[[${ticket.title}]]"</h3>
 

@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <th:block th:replace="~{fragments/head-script :: head}" \>
-    <title>Dashboard</title>
+        <title>Operators</title>
 </head>
+
 <body>
     <header>
         <th:block th:replace="~{fragments/navbar :: navbar}" \>
     </header>
     <main>
+        <div class="arrow-container">
+            <a th:href="@{/dashboard}" class="me-3 text-white">
+              <i class="fa-solid fa-arrow-left fa-lg"></i>
+            </a>
+        </div>
         <div class="container">
             <table class="text-center custom-table table table-hover my-3 border rounded shadow p-3 mb-5">
                 <thead>
@@ -41,4 +48,5 @@
     </main>
     <th:block th:replace="~{fragments/head-script :: script}" \></th:block>
 </body>
+
 </html>

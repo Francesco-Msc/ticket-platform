@@ -21,3 +21,10 @@ body{
 .red {
     background-color: red;
 }
+
+.arrow-container {
+    position: absolute;
+    margin-top: 15px;
+    left: 80px;
+    z-index: 10;
+  }

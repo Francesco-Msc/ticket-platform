@@ -11,7 +11,12 @@
         <th:block th:replace="~{fragments/navbar :: navbar}" \>
     </header>
     <main>
-        <div class="container shadow p-3 mt-5 bg-white border rounded">
+        <div class="arrow-container">
+            <a th:href="@{|/ticket/*{id}|}" class="me-3 text-white">
+              <i class="fa-solid fa-arrow-left fa-lg"></i>
+            </a>
+        </div>
+        <div class="container shadow p-3 bg-white border rounded">
             <h3 class="text-center mt-3">Change status for "[[${ticket.title}]]"</h3>
             <form th:action="@{/ticket/{id}/status(id=${ticket.id})}" method="post" th:object="${ticket}">
                 <input type="hidden" th:field="*{id}">

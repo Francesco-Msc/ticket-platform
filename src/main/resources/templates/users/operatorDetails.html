@@ -10,15 +10,17 @@
     <header>
         <th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
     </header>
-    
+
     <main>
+        <div class="arrow-container">
+            <a th:href="@{/users}" class="me-3 text-white">
+              <i class="fa-solid fa-arrow-left fa-lg"></i>
+            </a>
+        </div>
         <div class="container">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h3 class="mx-auto" th:text="${user.username}"></h3>
-                    <a class="mx-end" th:href="@{/users}">
-                        <i class="fa-solid fa-x"></i>
-                    </a>
                 </div>
                 <div class="card-body">
                     <div class="mb-2" th:if="${not #lists.isEmpty(user.tickets)}">
@@ -38,7 +40,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <div th:unless="${not #lists.isEmpty(user.tickets)}"  class="container alert alert-warning mt-5 text-center" role="alert">
+                    <div th:unless="${not #lists.isEmpty(user.tickets)}"
+                        class="container alert alert-warning mt-5 text-center" role="alert">
                         <h2>The operator don't have tickets assigned.</h2>
                     </div>
                 </div>

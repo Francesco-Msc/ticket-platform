@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:replace="~{fragments/head-script :: head}" \>
-        <title>Dashboard</title>
+        <title>Notes</title>
 </head>
 
 <body>
@@ -11,6 +11,11 @@
         <th:block th:replace="~{fragments/navbar :: navbar}" \>
     </header>
     <main>
+        <div class="arrow-container">
+            <a th:href="@{|/ticket/*{id}|}" class="me-3 text-white">
+              <i class="fa-solid fa-arrow-left fa-lg"></i>
+            </a>
+        </div>
         <div class="container">
             <div class="row">
                 <div th:each="note : ${notes}" th:object="${note}" class="col-md-4 mb-4">
