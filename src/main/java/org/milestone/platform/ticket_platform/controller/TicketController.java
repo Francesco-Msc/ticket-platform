@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 
@@ -104,8 +105,19 @@ public class TicketController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Integer id, Model model){
-        ticketService.delete(ticketService.getById(id));
+    public String delete(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+        Ticket ticket = ticketService.getById(id);
+        if (!ticket.getStatus().equals(TicketStatus.COMPLETED)) {
+            redirectAttributes.addFlashAttribute("errorDelete", "Ticket status must be COMPLETED to be deleted.");
+            return "redirect:/dashboard";
+        }
+        try {
+            ticketService.delete(ticket);
+            redirectAttributes.addFlashAttribute("successMessage", "Ticket deleted successfully!");  
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorDelete", "An error occurred while deleting the ticket.");
+        }
+
         return "redirect:/dashboard";
     }
 

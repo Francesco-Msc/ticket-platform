@@ -12,6 +12,15 @@
     </header>
     <main>
         <div class="container">
+            <div th:if="${errorDelete}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <p class="m-0" th:text="${errorDelete}"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <p class="m-0" th:text="${successMessage}"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <table class="text-center custom-table table table-hover my-3 border rounded shadow p-3 mb-5"
                 th:if="${tickets != null and tickets.size() > 0}">
                 <thead>
@@ -20,7 +29,7 @@
                         <th>Creation date</th>
                         <th>Status</th>
                         <th>See details</th>
-                        <th>Delete</th>
+                        <th sec:authorize="hasAuthority('Admin')">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +66,7 @@
                                     <div class="modal-body"
                                         th:unless="${ticket.notes != null and #lists.size(ticket.notes) > 0}">
                                         Are you sure you want to <strong class="fw-bold">delete permanently</strong>
-                                        "[[*{name}]]"?
+                                        "[[*{title}]]"?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
