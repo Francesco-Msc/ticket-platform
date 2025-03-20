@@ -18,6 +18,7 @@ public class SecurityConfig {
             .requestMatchers("/users").hasAuthority("Admin")
             .requestMatchers("/users/personal-area").hasAuthority("Operator")
             .requestMatchers("/ticket/create").hasAuthority("Admin")
+            .requestMatchers("ticket/delete/**").hasAuthority("Admin")
             .requestMatchers("/**").permitAll()
             .and()
             .formLogin()
