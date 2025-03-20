@@ -11,11 +11,15 @@
     <th:block th:replace="~{fragments/navbar :: navbar}" \>
   </header>
   <main>
+    <div class="arrow-container">
+      <a th:href="@{/dashboard}" class="me-3 text-white">
+        <i class="fa-solid fa-arrow-left fa-lg"></i>
+      </a>
+    </div>
     <div class="container">
-      <div class="arrow-container">
-        <a th:href="@{/dashboard}" class="me-3 text-white">
-          <i class="fa-solid fa-arrow-left fa-lg"></i>
-        </a>
+      <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <p class="m-0" th:text="${successMessage}"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <div class="card" th:each="ticket : ${tickets}" th:object="${ticket}">
         <div class="card-header text-center">

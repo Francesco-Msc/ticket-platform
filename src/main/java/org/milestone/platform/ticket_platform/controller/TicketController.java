@@ -57,11 +57,12 @@ public class TicketController {
     }
 
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("ticket") Ticket addTicket, BindingResult bindingResult, Authentication authentication,  Model model){
+    public String store(@Valid @ModelAttribute("ticket") Ticket addTicket, BindingResult bindingResult, Authentication authentication,  Model model, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()) {
             model.addAttribute("create", true);
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("users", userService.availableOperators(userService.findAll()));
+            redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong, please try again, if the error persist contact the support.");
             return "dashboard/create-edit";
         }
         User loggedUser = userService.getCurrentUser();
@@ -72,8 +73,8 @@ public class TicketController {
                 note.setUser(loggedUser);
             }
         }
-
         ticketService.create(addTicket);
+        redirectAttributes.addFlashAttribute("successMessage", "Ticket added successfully!");
         return "redirect:/dashboard";
     }
 
@@ -87,11 +88,12 @@ public class TicketController {
     }
 
     @PostMapping("/edit/{id}")
-    public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("ticket") Ticket updaTicket, BindingResult bindingResult, Model model){
+    public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("ticket") Ticket updaTicket, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("users", userService.availableOperators(userService.findAll()));
             model.addAttribute("stauses", TicketStatus.values());
+            redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong, please try again, if the error persist contact the support.");
             return "dashboard/create-edit";
         }
 
@@ -101,6 +103,7 @@ public class TicketController {
         model.addAttribute("stauses", TicketStatus.values());
 
         ticketService.update(updaTicket);
+        redirectAttributes.addFlashAttribute("successMessage", "Ticket updated successfully!");
         return "redirect:/ticket/" + id;
     }
 
@@ -108,14 +111,14 @@ public class TicketController {
     public String delete(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
         Ticket ticket = ticketService.getById(id);
         if (!ticket.getStatus().equals(TicketStatus.COMPLETED)) {
-            redirectAttributes.addFlashAttribute("errorDelete", "Ticket status must be COMPLETED to be deleted.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Ticket status must be COMPLETED to be deleted.");
             return "redirect:/dashboard";
         }
         try {
             ticketService.delete(ticket);
-            redirectAttributes.addFlashAttribute("successMessage", "Ticket deleted successfully!");  
+            redirectAttributes.addFlashAttribute("successMessage", "Ticket deleted successfully!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorDelete", "An error occurred while deleting the ticket.");
+            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while deleting the ticket.");
         }
 
         return "redirect:/dashboard";
@@ -155,8 +158,9 @@ public class TicketController {
     }
 
     @PostMapping("/{id}/status")
-    public String updateStatus(@PathVariable("id") Integer id, @RequestParam("status") TicketStatus newStatus, Model model){
+    public String updateStatus(@PathVariable("id") Integer id, @RequestParam("status") TicketStatus newStatus, Model model, RedirectAttributes redirectAttributes){
         ticketService.updateStatus(id, newStatus);
+        redirectAttributes.addFlashAttribute("successMessage", "Status updated successfully!");
         return "redirect:/dashboard";
     }
 }

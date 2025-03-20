@@ -15,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import jakarta.validation.Valid;
 
 @Controller
@@ -27,8 +29,9 @@ public class NoteController {
     private UserService userService;
 
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("note") Note addNote, BindingResult bindingResult, Model model, Authentication authentication){
+    public String store(@Valid @ModelAttribute("note") Note addNote, BindingResult bindingResult, Model model, Authentication authentication, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong, please try again, if the error persist contact the support.");
             return "notes/create-note";
         }
         User loggedUser = userService.getCurrentUser();
@@ -38,6 +41,7 @@ public class NoteController {
 
         noteService.create(addNote);
         Integer ticketId = addNote.getTicket().getId();
+        redirectAttributes.addFlashAttribute("successMessage", "Note added successfully!");
         return "redirect:/ticket/" + ticketId + "/notes"; 
     }
 }
