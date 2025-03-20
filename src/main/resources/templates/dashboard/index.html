@@ -20,6 +20,7 @@
                         <th>Creation date</th>
                         <th>Status</th>
                         <th>See details</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +33,42 @@
                                 <i class="fa-solid fa-link"></i>
                             </a>
                         </td>
+                        <td sec:authorize="hasAuthority('Admin')" th:object="${ticket}">
+                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                th:data-bs-target="'#delete-modal-' + *{id}">
+                                Delete
+                            </button>
+                        </td>
+                        <div class="modal fade" th:id="'delete-modal-' + *{id}" data-bs-keyboard="false" tabindex="-1"
+                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Deleting "[[*{title}]]"
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body"
+                                        th:if="${ticket.notes != null and #lists.size(ticket.notes) > 0}">
+                                        Are you sure you want to <strong class="fw-bold">delete permanently</strong>
+                                        "[[*{title}]]" and its notes?
+                                    </div>
+                                    <div class="modal-body"
+                                        th:unless="${ticket.notes != null and #lists.size(ticket.notes) > 0}">
+                                        Are you sure you want to <strong class="fw-bold">delete permanently</strong>
+                                        "[[*{name}]]"?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <form th:action="@{/ticket/delete/{id}(id=*{id})}" method="post">
+                                            <input type="submit" class="btn btn-danger text-decoration-none"
+                                                value="Delete" \>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                     </tr>
                 </tbody>
             </table>

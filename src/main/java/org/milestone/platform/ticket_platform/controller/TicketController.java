@@ -103,6 +103,12 @@ public class TicketController {
         return "redirect:/ticket/" + id;
     }
 
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id, Model model){
+        ticketService.delete(ticketService.getById(id));
+        return "redirect:/dashboard";
+    }
+
     @GetMapping("/note/{id}")
     public String note(@PathVariable("id") Integer id, Model model){
         Note note = new Note();

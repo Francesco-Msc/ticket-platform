@@ -63,6 +63,13 @@ public class TicketService {
         return ticketRepo.save(updaTicket);
     }
 
+    public void delete(Ticket ticket){
+        for (Note note : ticket.getNotes()) {
+            noteRepo.delete(note);
+        }
+        ticketRepo.delete(ticket);
+    }
+
     public List<Note> getNotesByTicketId(Integer ticketId){
         return noteRepo.findByTicketId(ticketId);
     }
