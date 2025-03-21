@@ -46,13 +46,12 @@
                 <div class="mb-3">
                     <label class="mb-2" for="category">Category:</label> <br>
                     <select th:field="*{category.id}" id="category" required class="form-select" aria-label="category">
-                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
-                        </option>
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label class="mb-2" for="assign">Assign to:</label> <br>
-                    <select th:field="*{user.id}" id="category" required class="form-select" aria-label="category">
+                    <select th:field="*{user.id}" id="assign" required class="form-select" aria-label="assign">
                         <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
                     </select>
                 </div>
