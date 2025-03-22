@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/users")
@@ -39,6 +40,7 @@ public class UserController {
     public String personalArea(Model model){
         model.addAttribute("isAvailable", userService.getCurrentUser().getIsAvailable());
         model.addAttribute("openTickets", userService.getOpenTicketsByUser(userService.getCurrentUser()));
+        model.addAttribute("user", userService.getCurrentUser());
         return "users/personal-area";
     }
 
@@ -52,7 +54,36 @@ public class UserController {
             model.addAttribute("errorMessage", "Cannot go offline if there are still open tickets");
             model.addAttribute("isAvailable", currentUser.getIsAvailable());
             model.addAttribute("openTickets", userService.getOpenTicketsByUser(userService.getCurrentUser()));
+            model.addAttribute("user", userService.getCurrentUser());
             return "users/personal-area";
+        }
+        return "redirect:/users/personal-area";
+    }
+
+    @PostMapping("/updateUser")
+    public String updateUser(@RequestParam(required = false) String newUsername, 
+                             @RequestParam(required = false) String newPassword,
+                             @RequestParam(required = false) String confirmPassword,
+                             RedirectAttributes redirectAttributes,
+                             Model model){
+
+        User currentUser = userService.getCurrentUser();
+        if (currentUser != null) {
+            if (newUsername != null && !newUsername.trim().isEmpty()) {
+                currentUser.setUsername(newUsername.trim());
+            }
+            if (newPassword != null && !newPassword.trim().isEmpty()) {
+                if (newPassword.equals(confirmPassword)) {
+                    userService.updatePassword(currentUser, newPassword.trim());
+                } else {
+                    redirectAttributes.addFlashAttribute("errorPasswordMismatch", "Passwords do not match!");
+                    return "redirect:/users/personal-area";
+                }
+            }
+            userService.update(currentUser);
+            model.addAttribute("user", currentUser);
+            
+            userService.updateAuthentication(currentUser);
         }
         return "redirect:/users/personal-area";
     }
