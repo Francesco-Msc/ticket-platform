@@ -125,8 +125,8 @@ public class TicketController {
         return "redirect:/dashboard";
     }
 
-    @GetMapping("/note/{id}")
-    public String note(@PathVariable("id") Integer id, Model model){
+    @GetMapping("/{id}/new-note")
+    public String createNote(@PathVariable("id") Integer id, Model model){
         Note note = new Note();
         note.setTicket(ticketService.getById(id));
         model.addAttribute("note", note);
