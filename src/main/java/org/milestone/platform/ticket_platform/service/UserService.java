@@ -11,12 +11,21 @@ import org.milestone.platform.ticket_platform.model.User;
 import org.milestone.platform.ticket_platform.repository.TicketRepository;
 import org.milestone.platform.ticket_platform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(PasswordEncoder passwordEncoder){
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Autowired
     private UserRepository userRepo;
 
@@ -84,5 +93,23 @@ public class UserService {
             }
         }
         return userOpenTickets;
+    }
+
+    public void updateAuthentication(User user){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(
+                user.getUsername(),
+                authentication.getCredentials(),
+                authentication.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+    }
+
+    public void updatePassword(User user, String newPassword){
+        if (newPassword != null && !newPassword.trim().isEmpty()) {
+            String encodedPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(encodedPassword);
+            userRepo.save(user);
+        }
     }
 }
