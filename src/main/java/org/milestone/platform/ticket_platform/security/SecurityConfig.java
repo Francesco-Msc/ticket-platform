@@ -17,6 +17,7 @@ public class SecurityConfig {
         http.authorizeRequests()
             .requestMatchers("/users").hasAuthority("Admin")
             .requestMatchers("/ticket/create").hasAuthority("Admin")
+            .requestMatchers("/ticket/edit/**").hasAuthority("Admin")
             .requestMatchers("ticket/delete/**").hasAuthority("Admin")
             .requestMatchers("/**").permitAll()
             .and()
