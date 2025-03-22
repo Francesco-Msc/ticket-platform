@@ -69,7 +69,26 @@
                         </div>
                     </div>
                 </div>
-                
+            </div>
+            <div class="card mt-2">
+                <form th:action="@{/users/updateUser}" method="post" class="m-3" th:object="${user}">
+                    <label for="changeUsername">New username:</label>
+                    <input type="text" id="changeUsername" name="newUsername" class="form-control me-2 mt-2">
+                    
+                    <label class="mt-2" for="changePassword">New password:</label>
+                    <input type="password" id="changePassword" name="newPassword" class="form-control me-2 mt-2">
+                    
+                    <label class="mt-2" for="confirmPassword">Confirm new password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control me-2 mt-2">
+                    
+                    <div th:if="${errorPasswordMismatch}" class="mt-3 alert alert-danger">
+                        <p class="m-0" th:text="${errorPasswordMismatch}"></p>
+                    </div>
+            
+                    <div class="text-center mt-2">
+                        <button type="submit" class="btn btn-primary mt-2">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </main>
