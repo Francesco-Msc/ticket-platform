@@ -18,7 +18,7 @@
             </a>
         </div>
         <div class="container">
-            <div class="card">
+            <div sec:authorize="hasAuthority('Operator')" class="card">
                 <div class="card-header text-center">
                     <h3 class="my-2">Welcome <span sec:authentication="name"></span></h3>
                 </div>
@@ -71,6 +71,9 @@
                 </div>
             </div>
             <div class="card mt-2">
+                <div sec:authorize="hasAuthority('Admin')" class="card-header text-center">
+                    <h3 class="my-2">Welcome <span sec:authentication="name"></span></h3>
+                </div>
                 <form th:action="@{/users/updateUser}" method="post" class="m-3" th:object="${user}">
                     <label for="changeUsername">New username:</label>
                     <input type="text" id="changeUsername" name="newUsername" class="form-control me-2 mt-2">

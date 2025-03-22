@@ -16,7 +16,6 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
             .requestMatchers("/users").hasAuthority("Admin")
-            .requestMatchers("/users/personal-area").hasAuthority("Operator")
             .requestMatchers("/ticket/create").hasAuthority("Admin")
             .requestMatchers("ticket/delete/**").hasAuthority("Admin")
             .requestMatchers("/**").permitAll()
