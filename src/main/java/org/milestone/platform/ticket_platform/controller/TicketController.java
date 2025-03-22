@@ -40,6 +40,7 @@ public class TicketController {
     
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model){
+        ticketService.isTicketAssigned(id);
         model.addAttribute("tickets", ticketService.getById(id));
         model.addAttribute("isDetail", true);
         model.addAttribute("notes", ticketService.getNotesByTicketId(id));
@@ -135,6 +136,7 @@ public class TicketController {
     @GetMapping("/{id}/notes")
     public String showNotes(@PathVariable("id") Integer id, Model model) {
         Ticket ticket = ticketService.getById(id);
+        ticketService.isTicketAssigned(id);
         
         if (ticket == null) {
             model.addAttribute("error", "Ticket non trovato");
@@ -152,6 +154,7 @@ public class TicketController {
 
     @GetMapping("/{id}/status")
     public String changeStatus(@PathVariable("id") Integer id, Model model){
+        ticketService.isTicketAssigned(id);
         model.addAttribute("ticket", ticketService.getById(id));
         model.addAttribute("stauses", TicketStatus.values());
         return "tickets/change-status";
@@ -159,6 +162,7 @@ public class TicketController {
 
     @PostMapping("/{id}/status")
     public String updateStatus(@PathVariable("id") Integer id, @RequestParam("status") TicketStatus newStatus, Model model, RedirectAttributes redirectAttributes){
+        ticketService.isTicketAssigned(id);
         ticketService.updateStatus(id, newStatus);
         redirectAttributes.addFlashAttribute("successMessage", "Status updated successfully!");
         return "redirect:/dashboard";
