@@ -120,4 +120,8 @@ public class TicketService {
         }
         throw new AccessDeniedException("Access denied");
     }
+
+    public List<Ticket> findByCategory(String category){
+        return ticketRepo.findByCategoryNameContaining(category);
+    }
 }
