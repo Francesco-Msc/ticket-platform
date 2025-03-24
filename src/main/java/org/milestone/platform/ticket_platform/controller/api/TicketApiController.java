@@ -24,9 +24,14 @@ public class TicketApiController {
         return ticketService.findAll();
     }
 
-    @GetMapping("/search")
-    public List<Ticket> filteredByCategory(@RequestParam String category){
-        return ticketService.findByCategory(category);
+    @GetMapping("/category")
+    public List<Ticket> filteredByCategory(@RequestParam String name){
+        return ticketService.findByCategory(name);
+    }
+
+    @GetMapping("/status")
+    public List<Ticket> filteredByStatus(@RequestParam String status){
+        return ticketService.findByTicketStatus(status);
     }
     
 }
