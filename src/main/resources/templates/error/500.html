@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <th:block th:replace="~{fragments/head-script :: head}" \></th:block>
+    <title>Pagina non trovata</title>
+</head>
+<body>
+    <div class="errorPage">
+        <h2 class="fs-5">ERROR: INTERNAL SERVER</h2>
+        <h1 class="fw-bold errorType">500</h1>
+        <p>The server encountered an unexpected condition that prevented it from fulfilling the request.</p>
+        <a class="btn btn-warning" th:href="@{/dashboard}">Homepage</a>
+    </div>
+</body>
+</html>

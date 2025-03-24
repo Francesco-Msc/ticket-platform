@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <th:block th:replace="~{fragments/head-script :: head}" \></th:block>
+    <title>Pagina non trovata</title>
+</head>
+<body>
+    <div class="errorPage">
+        <h2 class="fs-5">ERROR: PAGE NOT FOUND</h2>
+        <h1 class="fw-bold errorType">404</h1>
+        <p>If you keep getting this error contact the support.</p>
+        <a class="btn btn-warning" th:href="@{/dashboard}">Homepage</a>
+    </div>
+</body>
+</html>
