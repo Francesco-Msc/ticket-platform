@@ -124,4 +124,13 @@ public class TicketService {
     public List<Ticket> findByCategory(String category){
         return ticketRepo.findByCategoryNameContaining(category);
     }
+
+    public List<Ticket> findByTicketStatus(String status){
+        try {
+            TicketStatus ticketStatus = TicketStatus.valueOf(status.toUpperCase());
+            return ticketRepo.findByStatus(ticketStatus);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Status must be completed, processing or pending. Blank field is not accepted");
+        }
+    }
 }
