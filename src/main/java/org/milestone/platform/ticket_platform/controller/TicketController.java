@@ -127,6 +127,7 @@ public class TicketController {
 
     @GetMapping("/{id}/new-note")
     public String createNote(@PathVariable("id") Integer id, Model model){
+        ticketService.isTicketAssigned(id);
         Note note = new Note();
         note.setTicket(ticketService.getById(id));
         model.addAttribute("note", note);
